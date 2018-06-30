@@ -1,26 +1,44 @@
 var sha256 = require('sha256');
-var randomWords = require('random-words');
+var articles = require('articles');
 
 window.latinum= {};
 
 $(function(){
-    var generate_message = function(){
-        var words = randomWords({exactly: 2});
-        var vowelish = ['a','e','i','o','u','y','s'];
-        var sentence = "";
-        if (words[1].substr(-1,1) == "s"){
-            sentence = "You're all a bunch of " + words[0] + ' ' + words[1] + '.';
-        } else if (vowelish.includes(words[0].substr(-1,1)))  {
-            sentence = "Latitude is a place for " + words[0] + " " + words[1] + ".";
-        } else {
-            var suffix = "ing";
-            if (words[0].substr(-3,3) == 'ing'){
-                suffix = ""
-            }
-            sentence = "You're really " + words[0] + suffix + " my " + words[1] + ".";
-        }
-        return sentence;
+    var capital = function(word){
+        var lw = word.length;
+        return word.substr(0,1).toUpperCase() + word.substr(1,lw);
     };
+
+    var get_random = function(array, len){
+        return array[Math.floor(Math.random() * len)];
+    };
+
+    var adj = function(){
+       return get_random(adjectives, 5176);
+    };
+
+    var noun = function(){
+        return get_random(nouns, 2273);
+    };
+
+    var a_noun = function(){
+        return articles.articlize(noun());
+    };
+
+    var an_adj = function(){
+        return articles.articlize(adj());
+    };
+
+    var generate_message = function(){
+        var sentences = ["Latitude is " + an_adj() + " " + noun() + ".",
+                         "You are " + an_adj() + " " + adj() + " " + noun() + ".",
+                         "Performing on the main stage: " + capital(adj()) + " " + capital(noun()) + ".",
+                         "This " + noun() + " tastes oddly like " + an_adj() + " " + noun() + ".",
+                         "We'll make " + a_noun() + " out of you yet.",
+                         "Are we Human? Or are we " + capital(noun()) + "?"];
+        return get_random(sentences, sentences.length);
+    };
+
 
 
     var count_trailing_zeroes = function(hash){
