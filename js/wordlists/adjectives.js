@@ -1,4 +1,4 @@
-adjectives = ["abased",
+var adjectives = ["abased",
 "abject",
 "able",
 "abloom",
