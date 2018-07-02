@@ -1,4 +1,4 @@
-nouns = ["great-grandmother",
+latinum_nouns = ["great-grandmother",
 "great-grandfather",
 "step-grandmother",
 "step-grandfather",

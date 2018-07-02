@@ -1,5 +1,6 @@
 var sha256 = require('sha256');
 var articles = require('articles');
+var pluralize = require('pluralize');
 
 window.latinum= {};
 latinum.score = 0;
@@ -27,20 +28,30 @@ $(function(){
     };
 
     var noun = function(){
-        return get_random(nouns, 2273);
+        return get_random(latinum_nouns, 2273);
     };
 
     var nn = function (){
-        return get_random(nouns, 905).replace(/[aeiou]/g, '');
+        return get_random(latinum_nouns, 905).replace(/[aeiou]/g, '');
     };
 
     var a_noun = function(){
         return articles.articlize(noun());
     };
 
+    var nouns = function() {
+        var the_noun = noun();
+        return pluralize(the_noun, 2);
+    };
+
     var double_noun = function(){
         var n = capital(noun());
         return n + " " + n;
+    };
+
+    var multi_nouns = function(){
+        var n = capital(nouns())
+        return n + " " + n + " " + n + " "
     };
 
     var double_name = function(){
@@ -53,7 +64,7 @@ $(function(){
     };
 
     var monetise = function(word){
-        return word.replace('s','$').replace('e','€')
+        return word.replace('s','$').replace('e','€');
     };
 
     var name = function(){
@@ -61,22 +72,24 @@ $(function(){
     };
 
     var generate_message = function(){
-        var normal_sentences = [
+        /*var normal_sentences = [
                 "Latitude is " + an_adj() + " " + noun() + ".",
                 "You are " + an_adj() + " " + adj() + " " + noun() + ".",
                 "Performing on the main stage: " + capital(adj()) + " " + capital(noun()) + ".",
                 "This " + noun() + " tastes oddly like " + an_adj() + " " + noun() + ".",
                 "We'll make " + a_noun() + " out of you yet.",
                 "Are we Human? Or are we " + capital(noun()) + "?"
-        ];
+        ];*/
 
         var band_names = [
             nn(),
             name() + " and the " + capital(noun()),
+            name() + " and the " + capital(nouns()),
             name() + " " + name() + " and the " + capital(adj()) + " " + capital(noun()) + " band",
+            name() + " " + name() + " & the " + capital(adj()) + " " + capital(nouns()),
             "alt-" + noun(),
             "Aphex " + capital(noun()),
-            name() + " and the " + capital(adj()) + " " + capital(noun()),
+            name() + " and the " + capital(adj()) + " " + capital(nouns()),
             capital(adj()) + " " + capital(noun()),
             noun().toUpperCase() + "!",
             capital(adj()) + " Lewis and the " + capital(noun()),
@@ -93,11 +106,26 @@ $(function(){
             capital(adj()) + " " + name(),
             name() + " " + capital(noun()),
             "The artist formerly known as " + capital(noun()),
-            "Godspeed you " + capital(adj()) + " " + capital(noun()),
+            "Godspeed! You " + capital(adj()) + " " + capital(noun()),
             double_noun(),
             double_name(),
-            "The " + capital(noun()) + " orchestra",
-            "The " + capital(adj()) + " orchestra"
+            "The " + capital(noun()) + " Orchestra",
+            "The " + capital(adj()) + " Orchestra",
+            "Mega" + noun(),
+            capital(noun()) + "ica",
+            "The " + capital(nouns()),
+            "The " + capital(adj()) + " " + capital(nouns()),
+            "...And you will know us by the Trail of " + capital(nouns()),
+            "The " + capital(noun()) + " Quartet",
+            capital(noun()) + "! " + capital(noun()) + "! " + capital(nouns()) + "!",
+            "The " + capital(noun()) + " Fighters",
+            "The " + capital(noun()) +  " " + capital(nouns()),
+            name() + " and " + name() + " Play The Hits",
+            name() + " is " + capital(a_noun()),
+            name() + " " + name() + "-" + capital(noun()),
+            capital(adj()) + " B",
+            capital(noun()) + " D",
+            capital(noun()) + " B2B " + capital(adj()) + " " + capital(noun())
         ];
 
         var sentences = band_names;
