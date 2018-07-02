@@ -38,6 +38,16 @@ $(function(){
         return articles.articlize(noun());
     };
 
+    var double_noun = function(){
+        var n = capital(noun());
+        return n + " " + n;
+    };
+
+    var double_name = function(){
+        var n = capital(name());
+        return n + " " + n;
+    };
+
     var an_adj = function(){
         return articles.articlize(adj());
     };
@@ -81,7 +91,13 @@ $(function(){
             "DJ " + name() + " and MC " + name(),
             name(),
             capital(adj()) + " " + name(),
-            name() + " " + capital(noun())
+            name() + " " + capital(noun()),
+            "The artist formerly known as " + capital(noun()),
+            "Godspeed you " + capital(adj()) + " " + capital(noun()),
+            double_noun(),
+            double_name(),
+            "The " + capital(noun()) + " orchestra",
+            "The " + capital(adj()) + " orchestra"
         ];
 
         var sentences = band_names;
