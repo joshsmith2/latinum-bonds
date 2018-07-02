@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Latinum bonds</title>
+    <link rel="stylesheet" href="css/style.css"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/wordlists/nouns.js"></script>
     <script type="text/javascript" src="js/wordlists/adjectives.js"></script>
     <script type="text/javascript" src="js/bundle.js"></script>
 </head>
 <body>
-    <h1 id="human">bufftrage</h1>
-    <h1 id="message">default</h1>
-    <h1 id="ze-1">polr00</h1>
-    <h2 id="ze-2">f</h2>
+    <div id="main-container">
+        <h1 id="latest-message" class="message">bufftrage</h1>
+        <p id="latest-hash" class = "hash"><span class="head">head </span><span class="tail">tail</span></p>
+        <h2 class="score" id="last">0</h2>
+
+        <p id="best-message" class="message">Best message</p>
+        <p id="best-hash" class="hash"><span class="head">head </span><span class="tail">tail</span></p>
+        <h2 class="score" id="best">0</h2>
+
+    </div>
 </body>
 </html>

@@ -1,0 +1,18 @@
+#main-container{
+    width: 980px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hash {
+    font-family: monospace;
+    font-size: 2em;
+}
+
+.tail {
+    color: green;
+}
+
+
+
+
