@@ -4,13 +4,16 @@ var pluralize = require('pluralize');
 
 window.latinum= {};
 latinum.score = 0;
+latinum.roller = '';
+latinum.running = false;
+latinum.stop_at = 2;
 
 $(function(){
 
     var msg;
     var human_message;
     var best_message = '';
-    var best_score = 0;
+    var best_score = 1;
     var best_head = "";
     var best_tail = "";
 
@@ -49,9 +52,13 @@ $(function(){
         return n + " " + n;
     };
 
+    var double_adj = function(){
+        var a = adj();
+        return capital(a) + ", " + a + " ";
+    };
     var multi_nouns = function(){
-        var n = capital(nouns())
-        return n + " " + n + " " + n + " "
+        var n = capital(nouns());
+        return n + "! " + n + "! " + n + "!"
     };
 
     var double_name = function(){
@@ -85,7 +92,7 @@ $(function(){
             nn(),
             name() + " and the " + capital(noun()),
             name() + " and the " + capital(nouns()),
-            name() + " " + name() + " and the " + capital(adj()) + " " + capital(noun()) + " band",
+            name() + " " + name() + " and the " + capital(adj()) + " " + capital(noun()) + " Band",
             name() + " " + name() + " & the " + capital(adj()) + " " + capital(nouns()),
             "alt-" + noun(),
             "Aphex " + capital(noun()),
@@ -105,7 +112,8 @@ $(function(){
             name(),
             capital(adj()) + " " + name(),
             name() + " " + capital(noun()),
-            "The artist formerly known as " + capital(noun()),
+            name() + " " + capital(nouns()),
+            "The Artist formerly known as " + capital(noun()),
             "Godspeed! You " + capital(adj()) + " " + capital(noun()),
             double_noun(),
             double_name(),
@@ -117,7 +125,6 @@ $(function(){
             "The " + capital(adj()) + " " + capital(nouns()),
             "...And you will know us by the Trail of " + capital(nouns()),
             "The " + capital(noun()) + " Quartet",
-            capital(noun()) + "! " + capital(noun()) + "! " + capital(nouns()) + "!",
             "The " + capital(noun()) + " Fighters",
             "The " + capital(noun()) +  " " + capital(nouns()),
             name() + " and " + name() + " Play The Hits",
@@ -125,7 +132,16 @@ $(function(){
             name() + " " + name() + "-" + capital(noun()),
             capital(adj()) + " B",
             capital(noun()) + " D",
-            capital(noun()) + " B2B " + capital(adj()) + " " + capital(noun())
+            capital(noun()) + " B2B " + capital(adj()) + " " + capital(noun()),
+            multi_nouns(),
+            capital(noun()) + "pusher",
+            capital(a_noun()) + " called " + name(),
+            capital(noun()) + "song",
+            capital(noun()) + " Problems",
+            name() + "'s Big " + capital(nouns()),
+            name() + "'s " + capital(adj()) + " " + capital(nouns()),
+            double_adj() + capital(nouns()),
+            capital(adj()) + " " + capital(noun()) + " Soundsystem"
         ];
 
         var sentences = band_names;
@@ -139,9 +155,13 @@ $(function(){
         msg = sha256.x2(human_message);
         latinum.score = latinum.count_trailing_zeroes(msg);
 
-        var head = msg.substr(0, 64-latinum.score);
-        var tail = msg.substr(-latinum.score, latinum.score);
+        var head = msg.substr(0, latinum.score);
+        var tail = msg.substr(latinum.score, 64);
 
+        if (latinum.score >= latinum.stop_at) {
+            window.clearInterval(latinum.roller);
+            latinum.running = false;
+        }
         if (latinum.score >= best_score) {
             best_score = latinum.score;
             best_message = human_message;
@@ -169,25 +189,28 @@ $(function(){
         }
     };
 
-    var count_trailing_zeroes = function(hash){
+    var count_leading_zeroes = function(hash){
         var zeroes = 0;
         hash =  $.trim(hash);
-        for (var i=1; i <= hash.length; i++){
-            if (hash.substr(-i,1) !== '0'){
-                zeroes = i-1;
+        for (var i=0; i <= hash.length; i++){
+            if (hash.substr(i,1) !== '0'){
+                zeroes = i;
                 return zeroes
             }
         }
     };
 
     latinum.generate_message = generate_message;
-    latinum.count_trailing_zeroes = count_trailing_zeroes;
+    latinum.count_trailing_zeroes = count_leading_zeroes;
     latinum.run_until_target = run_until_target;
     latinum.run_generator = run_generator;
 });
 
 $(document).ready(function() {
     $(document).keypress(function(){
-        latinum.run_generator();
+        if (!latinum.running) {
+            latinum.roller = window.setInterval(latinum.run_generator, 1);
+            latinum.running = true;
+        }
     });
 });
