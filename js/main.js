@@ -54,7 +54,7 @@ $(function(){
 
     var double_adj = function(){
         var a = adj();
-        return capital(a) + ", " + a + " ";
+        return capital(a) + ", " + capital(a) + " ";
     };
     var multi_nouns = function(){
         var n = capital(nouns());
@@ -79,14 +79,6 @@ $(function(){
     };
 
     var generate_message = function(){
-        /*var normal_sentences = [
-                "Latitude is " + an_adj() + " " + noun() + ".",
-                "You are " + an_adj() + " " + adj() + " " + noun() + ".",
-                "Performing on the main stage: " + capital(adj()) + " " + capital(noun()) + ".",
-                "This " + noun() + " tastes oddly like " + an_adj() + " " + noun() + ".",
-                "We'll make " + a_noun() + " out of you yet.",
-                "Are we Human? Or are we " + capital(noun()) + "?"
-        ];*/
 
         var band_names = [
             nn(),
@@ -141,7 +133,11 @@ $(function(){
             name() + "'s Big " + capital(nouns()),
             name() + "'s " + capital(adj()) + " " + capital(nouns()),
             double_adj() + capital(nouns()),
-            capital(adj()) + " " + capital(noun()) + " Soundsystem"
+            capital(adj()) + " " + capital(noun()) + " Soundsystem",
+            name() + "'s only " + capital(noun()),
+            name() + " Mc" + name(),
+            name() + " Mc" + capital(adj()),
+            capital(adj()) +  " " + capital(noun()) + " " + capital(nouns()),
         ];
 
         var sentences = band_names;
@@ -161,12 +157,22 @@ $(function(){
         if (latinum.score >= latinum.stop_at) {
             window.clearInterval(latinum.roller);
             latinum.running = false;
+            $(".score#last").removeClass('grey');
+            $(".score#last").addClass('green');
+        } else {
+            $(".score#last").removeClass('green');
+            $(".score#last").addClass('grey');
         }
         if (latinum.score >= best_score) {
             best_score = latinum.score;
             best_message = human_message;
             best_head = head;
             best_tail = tail;
+
+            $('#best-message').text(best_message);
+            $('#best-hash .head').text(best_head);
+            $("#best-hash .tail").text(best_tail);
+            $(".score#best").text(best_score);
         }
 
         $('#latest-message').text(human_message);
@@ -174,10 +180,6 @@ $(function(){
         $("#latest-hash .tail").text(tail);
         $(".score#last").text(latinum.score);
 
-        $('#best-message').text(best_message);
-        $('#best-hash .head').text(best_head);
-        $("#best-hash .tail").text(best_tail);
-        $(".score#best").text(best_score);
     };
 
     var run_until_target = function(target) {
@@ -213,4 +215,7 @@ $(document).ready(function() {
             latinum.running = true;
         }
     });
+
+    var meggs = "00000000000000000016400e48e21baed5672eeecf2dd48561fca8f7ae18c5dd Please pay the lovely Greg at ‘Curl Up and Dye’ 0.004 Bitcoin from my account 0";
+    console.log(sha256.x2(meggs));
 });

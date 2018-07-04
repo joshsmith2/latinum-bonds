@@ -1,20 +1,121 @@
+/* Fonts */
+
+@font-face {
+    font-family: 'Codystar';
+    src:    url('../fonts/codystar-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Colours */
+.gold {
+    background-color: gold;
+    color: black;
+}
+
+.green {
+    background-color: green;
+    color: white;
+}
+
+.grey {
+    background-color: #555;
+    color: white;
+}
+
+/* Page */
+
 body{
-    font-family: sans-serif;
+    font-family: monospace;
+    margin: 0;
+}
+
+p {
+    font-size: 1.5em;
 }
 
 #main-container{
     width: 980px;
     margin: 0 auto;
+    text-align: left;
+    position: fixed;
+    top: 120px;
+    left: 252px;
+}
+
+#results-container{
+    width: 60%
+}
+
+.hash-and-score{
+    position: relative;
+}
+
+.hash-container{
+    width: 64%;
+    float: left;
+}
+
+.clear:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.score{
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-top: 15px;
+    margin-left: 24px;
+    padding: 5px 3px 1px 4px;
+    font-size: 2.5em;
+    font-family: 'Codystar', monospace;
+    border-radius: 50%;
     text-align: center;
+}
+
+#sidebar {
+    width: 240px;
+    height: 100%;
+    top: 120px;
+    left: 0;
+    position: fixed;
+    background-color: green;
+    text-align: center;
+}
+
+.message{
+    font-family: 'Futura';
+}
+
+#title {
+    width: 100%;
+    background-color: #333;
+    height: 85px;
+    font-size: 2.6em;
+    color: white;
+    text-align: center;
+    padding-top: 35px;
+    font-family: 'Futura';
+}
+
+.message {
+    margin-bottom: 0;
+    margin-left: 24px;
 }
 
 .hash {
     font-family: monospace;
-    font-size: 2em;
+    word-break: break-all;
+}
+
+#latest-message {
 }
 
 .head {
     color: green;
 }
+
 
 

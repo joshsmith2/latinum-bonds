@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Latinum bonds</title>
     <link rel="stylesheet" href="css/style.css"/>
+
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/wordlists/nouns.js"></script>
     <script type="text/javascript" src="js/wordlists/adjectives.js"></script>
@@ -11,17 +12,41 @@
     <script type="text/javascript" src="js/bundle.js"></script>
 </head>
 <body>
+    <div id="title">THE GREAT DEMOS BLOCKCHAIN BAND-NAME GENERATOR</div>
+    <div id="sidebar">
+        <p>Last hash</p>
+        <p>Transaction</p>
+        <p>Nonce</p>
+        <p>New hash</p>
+    </div>
+
     <div id="main-container">
+        <div id="results-container">
+            <div class="hash-and-score clear">
+                <div class="hash-container">
+                    <p id="last-hash" class="hash"><span class='head'>0000000000000000000</span><span class=tail>3d7206fc85beee9e098c00098026516944070b4daef62</span></p>
+                </div>
+            </div>
+            <p>Please pay Greg the Barber 0.0021 BTC for my last haircut</p>
+            <p>Also check out my new band:</p>
+            <p id="latest-message" class="message">bufftrage</p>
 
-        <h1 id="latest-message" class="message">bufftrage</h1>
-        <p id="latest-hash" class = "hash"><span class="head">head </span><span class="tail">tail</span></p>
-        <h2 class="score" id="last">0</h2>
+            <div class="hash-and-score clear">
+                <div class="hash-container">
+                    <p id="latest-hash" class = "hash"><span class="head">head </span><span class="tail">tail</span></p>
+                </div>
+                <p class="score grey" id="last">0</p>
+            </div>
+            <p>Best name</p>
+            <p id="best-message" class="message">Best message</p>
 
-        <h1>Best name</h1>
-        <h1 id="best-message" class="message">Best message</h1>
-        <p id="best-hash" class="hash"><span class="head">head </span><span class="tail">tail</span></p>
-        <h2 class="score" id="best">0</h2>
-
+            <div class="hash-and-score clear">
+                <div class="hash-container">
+                    <p id="best-hash" class="hash"><span class="head">head </span><span class="tail">tail</span></p>
+                </div>
+                <p class="score gold" id="best">0</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
