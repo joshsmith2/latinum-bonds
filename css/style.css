@@ -47,6 +47,15 @@ p {
     width: 60%
 }
 
+#winning-names{
+    position: fixed;
+    top: 120px;
+    left: 66%;
+    width: 37%;
+    overflow-y: scroll;
+    height: 650px;
+}
+
 .hash-and-score{
     position: relative;
 }
@@ -86,7 +95,7 @@ p {
 }
 
 .message{
-    font-family: 'Futura';
+    font-family: 'Futura', sans-serif;
 }
 
 #title {
@@ -97,7 +106,24 @@ p {
     color: white;
     text-align: center;
     padding-top: 35px;
-    font-family: 'Futura';
+    font-family: 'Futura', sans-serif;
+}
+
+.side {
+    float: left;
+
+}
+
+.side .score {
+    font-size: 2em;
+    width: 44px;
+    height: 44px;
+    margin: 5px 5px 0 0;
+}
+
+.side .message {
+    margin: 13px 0 15px 7px;
+    width: 345px
 }
 
 .message {

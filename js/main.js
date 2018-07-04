@@ -141,7 +141,6 @@ $(function(){
         ];
 
         var sentences = band_names;
-
         return get_random(sentences, sentences.length);
     };
 
