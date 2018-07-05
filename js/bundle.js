@@ -17,6 +17,32 @@ $(function(){
     var best_score = 1;
     var best_head = "";
     var best_tail = "";
+    var messages = [];
+
+
+    function two_level_sort(a, b) {
+      var score1 = a.score;
+      var score2 = b.score;
+
+      var message1 = a.message.toLowerCase();
+      var message2 = b.message.toLowerCase();
+
+      if (score1 < score2) return -1;
+      if (score1 > score2) return 1;
+      if (message1 < message2) return -1;
+      if (message1 > message2) return 1;
+      return 0;
+    }
+
+    var add_to_message_list = function(msg, scr) {
+        messages.push({message: msg, score: scr});
+        for (i = 0; i < messages.length; i++){
+            console.log(messages[i].message);
+            $("#winner-" + i + " .message").text(messages[i].message);
+            $("#winner-" + i + " .score").text(messages[i].score);
+            $("#winner-" + i + " .score").addClass('green');
+        }
+    };
 
     var capital = function(word){
         var lw = word.length;
@@ -39,8 +65,13 @@ $(function(){
         return get_random(latinum_nouns, 905).replace(/[aeiou]/g, '');
     };
 
-    var a_noun = function(){
-        return articles.articlize(noun());
+    var a_noun = function(cap){
+        if (cap === 'c') {
+            out = articles.articlize(capital(noun()));
+        } else {
+            out = articles.articlize(noun());
+        }
+        return out;
     };
 
     var nouns = function() {
@@ -53,10 +84,6 @@ $(function(){
         return n + " " + n;
     };
 
-    var double_adj = function(){
-        var a = adj();
-        return capital(a) + ", " + capital(a) + " ";
-    };
     var multi_nouns = function(){
         var n = capital(nouns());
         return n + "! " + n + "! " + n + "!"
@@ -121,34 +148,34 @@ $(function(){
             "The " + capital(noun()) + " Fighters",
             "The " + capital(noun()) +  " " + capital(nouns()),
             name() + " and " + name() + " Play The Hits",
-            name() + " is " + capital(a_noun()),
+            name() + " is " + capital(a_noun('c')),
             name() + " " + name() + "-" + capital(noun()),
             capital(adj()) + " B",
             capital(noun()) + " D",
             capital(noun()) + " B2B " + capital(adj()) + " " + capital(noun()),
             multi_nouns(),
             capital(noun()) + "pusher",
-            capital(a_noun()) + " called " + name(),
+            a_noun("c") + " called " + name(),
             capital(noun()) + "song",
             capital(noun()) + " Problems",
             name() + "'s Big " + capital(nouns()),
             name() + "'s " + capital(adj()) + " " + capital(nouns()),
-            double_adj() + capital(nouns()),
             capital(adj()) + " " + capital(noun()) + " Soundsystem",
             name() + "'s only " + capital(noun()),
             name() + " Mc" + name(),
             name() + " Mc" + capital(adj()),
             capital(adj()) +  " " + capital(noun()) + " " + capital(nouns()),
+            "The " + capital(noun()) + "-" + capital(noun()) + " Clan",
+            "Ol' " + capital(adj()) + " " + capital(noun()),
+            "Ol' " + capital(adj()) + " " + name(),
         ];
 
         var sentences = band_names;
-
         return get_random(sentences, sentences.length);
     };
 
     var run_generator = function() {
         human_message = latinum.generate_message();
-
         msg = sha256.x2(human_message);
         latinum.score = latinum.count_trailing_zeroes(msg);
 
@@ -156,13 +183,16 @@ $(function(){
         var tail = msg.substr(latinum.score, 64);
 
         if (latinum.score >= latinum.stop_at) {
+            add_to_message_list(human_message, latinum.score);
             window.clearInterval(latinum.roller);
             latinum.running = false;
-            $(".score#last").removeClass('grey');
-            $(".score#last").addClass('green');
+            var last_score = $(".score#last");
+            last_score.removeClass('grey');
+            last_score.addClass('green');
         } else {
-            $(".score#last").removeClass('green');
-            $(".score#last").addClass('grey');
+            var last_score = $(".score#last");
+            last_score.removeClass('green');
+            last_score.addClass('grey');
         }
         if (latinum.score >= best_score) {
             best_score = latinum.score;
@@ -179,17 +209,8 @@ $(function(){
         $('#latest-message').text(human_message);
         $('#latest-hash .head').text(head);
         $("#latest-hash .tail").text(tail);
-        $(".score#last").text(latinum.score);
+        last_score.text(latinum.score);
 
-    };
-
-    var run_until_target = function(target) {
-        target = typeof target !== 'undefined' ? target : 4;
-        count = 0;
-        while (count < target) {
-            run_generator();
-            count = latinum.score;
-        }
     };
 
     var count_leading_zeroes = function(hash){
@@ -205,7 +226,6 @@ $(function(){
 
     latinum.generate_message = generate_message;
     latinum.count_trailing_zeroes = count_leading_zeroes;
-    latinum.run_until_target = run_until_target;
     latinum.run_generator = run_generator;
 });
 
@@ -216,9 +236,6 @@ $(document).ready(function() {
             latinum.running = true;
         }
     });
-
-    var meggs = "00000000000000000016400e48e21baed5672eeecf2dd48561fca8f7ae18c5dd Please pay the lovely Greg at ‘Curl Up and Dye’ 0.004 Bitcoin from my account 0";
-    console.log(sha256.x2(meggs));
 });
 
 },{"articles":2,"pluralize":5,"sha256":6}],2:[function(require,module,exports){
