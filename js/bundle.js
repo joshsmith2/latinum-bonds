@@ -7,7 +7,9 @@ window.latinum= {};
 latinum.score = 0;
 latinum.roller = '';
 latinum.running = false;
+latinum.finished = false;
 latinum.stop_at = 2;
+latinum.messages = [];
 
 $(function(){
 
@@ -34,13 +36,40 @@ $(function(){
       return 0;
     }
 
-    var add_to_message_list = function(msg, scr) {
-        messages.push({message: msg, score: scr});
+    var end_this_go = function(){
+        latinum.finished = true;
+        var time_taken = new Date - latinum.start_time;
+        var expected_multiple = latinum.hashcount * Math.pow(16,12);
+        var expected_time = time_taken * expected_multiple;
+        var years_taken = Math.round(expected_time / 31536000000);
+        $("#years").text(years_taken.toLocaleString('en'));
+        $("#hashcount").text(latinum.hashcount);
+        $('#final-message').toggleClass('hidden');
+        $('#normal-message').toggleClass('hidden');
+    };
+
+    var update_lineup = function(){
+        messages = latinum.messages;
         for (i = 0; i < messages.length; i++){
-            console.log(messages[i].message);
             $("#winner-" + i + " .message").text(messages[i].message);
             $("#winner-" + i + " .score").text(messages[i].score);
             $("#winner-" + i + " .score").addClass('green');
+        }
+    };
+
+    var clear_lineup = function(){
+        for (i = 0; i < messages.length; i++){
+            $("#winner-" + i + " .message").text('');
+            $("#winner-" + i + " .score").text('');
+            $("#winner-" + i + " .score").removeClass('green');
+        }
+    };
+
+    var add_to_message_list = function(msg, scr) {
+        latinum.messages.push({message: msg, score: scr});
+        update_lineup();
+        if (messages.length === 12) {
+            end_this_go();
         }
     };
 
@@ -142,20 +171,22 @@ $(function(){
             "Mega" + noun(),
             capital(noun()) + "ica",
             "The " + capital(nouns()),
+            "The " + capital(nouns()),
+            "The " + capital(nouns()),
             "The " + capital(adj()) + " " + capital(nouns()),
             "...And you will know us by the Trail of " + capital(nouns()),
             "The " + capital(noun()) + " Quartet",
             "The " + capital(noun()) + " Fighters",
             "The " + capital(noun()) +  " " + capital(nouns()),
             name() + " and " + name() + " Play The Hits",
-            name() + " is " + capital(a_noun('c')),
+            name() + " is " + a_noun('c'),
             name() + " " + name() + "-" + capital(noun()),
             capital(adj()) + " B",
             capital(noun()) + " D",
             capital(noun()) + " B2B " + capital(adj()) + " " + capital(noun()),
             multi_nouns(),
             capital(noun()) + "pusher",
-            a_noun("c") + " called " + name(),
+            capital(a_noun("c")) + " called " + name(),
             capital(noun()) + "song",
             capital(noun()) + " Problems",
             name() + "'s Big " + capital(nouns()),
@@ -177,6 +208,7 @@ $(function(){
     var run_generator = function() {
         human_message = latinum.generate_message();
         msg = sha256.x2(human_message);
+        latinum.hashcount += 1;
         latinum.score = latinum.count_trailing_zeroes(msg);
 
         var head = msg.substr(0, latinum.score);
@@ -224,16 +256,39 @@ $(function(){
         }
     };
 
+    var reset = function(){
+        latinum.start_time = new Date;
+        latinum.hashcount = 0;
+        latinum.finished = false;
+        $('#final-message').toggleClass('hidden');
+        $('#normal-message').toggleClass('hidden');
+        latinum.messages = [];
+        clear_lineup();
+    };
+
     latinum.generate_message = generate_message;
     latinum.count_trailing_zeroes = count_leading_zeroes;
     latinum.run_generator = run_generator;
+    latinum.reset = reset;
 });
 
 $(document).ready(function() {
-    $(document).keypress(function(){
-        if (!latinum.running) {
-            latinum.roller = window.setInterval(latinum.run_generator, 1);
-            latinum.running = true;
+    latinum.start_time = new Date;
+    latinum.hashcount = 0;
+    $(document).keypress(function( event ){
+        if (!latinum.finished) {
+            if (!latinum.running) {
+                latinum.roller = window.setInterval(latinum.run_generator, 1);
+                latinum.running = true;
+                return false;
+            }
+        } else {
+            if (event.key === 'c') {
+                latinum.reset();
+                return false;
+            } else {
+                return false;
+            }
         }
     });
 });

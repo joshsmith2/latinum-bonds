@@ -15,44 +15,51 @@
     <div id="title">THE GREAT DEMOS BLOCKCHAIN BAND-NAME GENERATOR</div>
 
     <div id="main-container">
-        <div id = "punchcard">
-            <div class="sidebar">
-                <p class="l1">Last hash</p>
-                <p class="l2">Transaction</p>
-                <p class="l3">Nonce</p>
-            </div>
-            <div class="main-bit">
-                <div class="hash-and-score clear">
-                    <div class="hash-container">
-                        <p id="last-hash" class="hash"><span class='head'>0000000000000000000</span><span class=tail>3d7206fc85beee9e098c00098026516944070b4daef62</span></p>
-                    </div>
+        <div id="left-col">
+                <div id = "punchcard">
+                <div class="sidebar">
+                    <p class="l1">Last hash</p>
+                    <p class="l2">Transaction</p>
+                    <p class="l3">Nonce</p>
                 </div>
-                <p>Please pay Greg the barber 0.0021 BTC for my last haircut</p>
-                <p id="also">Also check out my new band:</p>
-                <p id="latest-message" class="message">bufftrage</p>
-            </div>
-        </div>
-        <div id = "underpunch">
-            <div class="sidebar">
-                <p>Whole message hash</p>
-                <p id="best-name">Best name</p>
-            </div>
-            <div class = "main-bit">
-                <div class="hash-and-score clear">
-                    <div class="hash-container">
-                        <p id="latest-hash" class = "hash"><span class="head">head </span><span class="tail">tail</span></p>
+                <div id="normal-message" class="main-bit">
+                    <div class="hash-and-score clear">
+                        <div class="hash-container">
+                            <p id="last-hash" class="hash"><span class='head'>0000000000000000000</span><span class=tail>3d7206fc85beee9e098c00098026516944070b4daef62</span></p>
+                        </div>
                     </div>
-                    <p class="score grey" id="last">0</p>
+                    <p>Please pay Greg the barber 0.0021 BTC for my last haircut</p>
+                    <p id="also">Also check out my new band:</p>
+                    <p id="latest-message" class="message"></p>
                 </div>
-                <p id="best-message" class="message">Best message</p>
-                <div class="hash-and-score clear">
-                    <div class="hash-container">
-                        <p id="best-hash" class="hash"><span class="head">head </span><span class="tail">tail</span></p>
-                    </div>
-                    <p class="score gold" id="best">0</p>
+                <div id="final-message" class="main-bit hidden">
+                    <p>You hashed <span id="hashcount"></span> messages</p>
+                    <p>At this rate, it would take you <span id="years"></span> years to mine a block on the Bitcoin blockchain.</p>
+                    <p>Better keep it up!</p>
+                    <p class="italic">Press C to try again</p>
                 </div>
             </div>
-
+            <div id = "underpunch">
+                <div class="sidebar">
+                    <p>Whole message hash</p>
+                    <p id="best-name">Best name</p>
+                </div>
+                <div class = "main-bit">
+                    <div class="hash-and-score clear">
+                        <div class="hash-container">
+                            <p id="latest-hash" class = "hash"><span class="head"></span><span class="tail"></span></p>
+                        </div>
+                        <p class="score grey" id="last">0</p>
+                    </div>
+                    <p id="best-message" class="message"></p>
+                    <div class="hash-and-score clear">
+                        <div class="hash-container">
+                            <p id="best-hash" class="hash"><span class="head"></span><span class="tail"></span></p>
+                        </div>
+                        <p class="score gold" id="best">0</p>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="winning-names">
             <p id="winner-title">Latitude Lineup 2019</p>

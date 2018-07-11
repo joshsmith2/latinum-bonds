@@ -28,6 +28,7 @@
 body{
     font-family: monospace;
     margin: 0;
+    background-color: #555555;
 }
 
 p {
@@ -35,12 +36,12 @@ p {
 }
 
 #main-container{
-    width: 1020px;
     margin: 0 auto;
-    text-align: left;
-    position: fixed;
-    top: 120px;
-    left: 0;
+    position: relative;
+    width: 1240px;
+    background-color: white;
+    height: 800px;
+    padding: 0 20px;
 }
 
 #results-container{
@@ -48,12 +49,12 @@ p {
 }
 
 #winning-names{
-    position: fixed;
-    top: 120px;
+    position: relative;
+    top: 10px;
     left: 815px;
-    width: 37%;
+    width: 400px;
     overflow-y: scroll;
-    height: 680px;
+    height: 765px;
     padding-left: 15px;
     background-color: #feffac;
 }
@@ -93,7 +94,7 @@ p {
 #punchcard{
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 30px;
     height: 286px;
 }
 
@@ -179,8 +180,8 @@ p {
 }
 
 .side .message {
-    margin: 13px 0 15px 7px;
-    width: 345px;
+    margin: 13px 10px 15px 7px;
+    width: 327px;
     font-size: 1.2em;
 }
 
@@ -209,7 +210,23 @@ p {
     font-family: 'Codystar', monospace;
     font-size: 2em;
     margin: 10px;
+    text-align: center;
 }
 
+.left-col{
+    position: relative;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.italic {
+    font-style: italic;
+}
 
 
